@@ -1,13 +1,10 @@
 extends CharacterBody2D
 
-# Movement speed (16 pixels per step)
-var grid_size = 8
-
-# Track whether the sprite is currently moving
+@export var grid_size: int = 8  # Movement step size
 var is_moving = false
 
-# Reference to the AnimatedSprite2D node
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var collision_shape = $CollisionShape2D  # Reference to CollisionShape2D
 
 func _process(delta):
 	if not is_moving:
@@ -28,17 +25,25 @@ func _process(delta):
 			move_sprite(direction)
 
 func move_sprite(direction: Vector2):
-	# Mark the sprite as moving
 	is_moving = true
 
 	# Calculate the target position
 	var target_position = position + direction * grid_size
 
-	# Move the sprite to the target position
+	# Perform a collision check using the CollisionShape2D
+	var motion = direction * grid_size
+	var collision = move_and_collide(motion)
+
+	if collision:
+		is_moving = false  # Stop movement if there's a collision
+		return
+
+	# Move the sprite
 	position = target_position
 
 	# Play the animation
-	animated_sprite.play("move")  # Replace "move" with the name of your animation
+	animated_sprite.play("move")  # Replace "move" with your animation name
 
-	# Mark the sprite as no longer moving
+	# Mark as no longer moving after a short delay
+	await get_tree().create_timer(0.1).timeout
 	is_moving = false
