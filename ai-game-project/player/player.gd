@@ -8,6 +8,7 @@ var is_moving = false
 
 # Reference to the AnimatedSprite2D node
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var tilemap: TileMap = $TileMap  # Adjust the path to your TileMap node
 
 func _process(delta):
 	if not is_moving:
