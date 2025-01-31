@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dd1ah3k4ljj2"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_utxvc"]
+[ext_resource type="Texture2D" uid="uid://dd2x7kau734d3" path="res://assets/kenney_pixel-line-platformer/Tiles/tile_0042.png" id="1_wabs0"]
+[ext_resource type="Texture2D" uid="uid://bvdod040nu7dh" path="res://assets/kenney_pixel-line-platformer/Tiles/tile_0041.png" id="2_ynfab"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_41q1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ynfab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_wabs0")
+}],
+"loop": false,
+"name": &"move",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6bky"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_utxvc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_41q1o")
+animation = &"move"
+autoplay = "move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_i6bky")
